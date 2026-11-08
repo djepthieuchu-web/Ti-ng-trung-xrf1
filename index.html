@@ -1,489 +1,278 @@
 <!DOCTYPE html>
-<html lang="vi" data-theme="light">
+<html lang="vi" class="light">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0f766e">
-<title>Luyện tiếng Trung kỹ thuật XRF</title>
-<style>
-:root{--bg:#f3f6fa;--card:#ffffff;--tx:#14202b;--mut:#566676;--pri:#0f766e;--onpri:#ffffff;--pri-soft:#d9f3ef;--acc:#c2410c;--bd:#d8e1ea;--ok:#166534;--okbg:#e4f5ea;--warn:#92400e;--warnbg:#fff3dc;--bad:#b91c1c;--badbg:#fde9e9;--py:#1d4ed8;--sh:0 2px 10px rgba(15,35,55,.08)}
-[data-theme=dark]{--bg:#0d1318;--card:#16202a;--tx:#e8eef3;--mut:#9db0c0;--pri:#2dd4bf;--onpri:#04211d;--pri-soft:#12302d;--acc:#fb923c;--bd:#2a3846;--ok:#86efac;--okbg:#12301f;--warn:#fcd34d;--warnbg:#332708;--bad:#fca5a5;--badbg:#3a1717;--py:#93c5fd;--sh:none}
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;padding:0;max-width:100%;overflow-x:hidden;background:var(--bg);color:var(--tx);-webkit-text-size-adjust:100%;text-size-adjust:100%}
-body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans","Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;font-size:16px;line-height:1.5}
-.top{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:8px 14px;padding-top:calc(8px + env(safe-area-inset-top));background:var(--pri);color:var(--onpri)}
-.brand{font-weight:700;font-size:1.05rem}
-.top .ico{background:transparent;border:1px solid currentColor;color:inherit;min-width:44px;min-height:44px;border-radius:12px;font-size:1.2rem}
-main{padding:12px 12px 96px;max-width:720px;margin:0 auto;width:100%}
-.tabs{position:fixed;left:0;right:0;bottom:0;z-index:30;display:flex;background:var(--card);border-top:1px solid var(--bd);padding-bottom:env(safe-area-inset-bottom)}
-.tabs button{flex:1;min-height:60px;border:0;background:transparent;color:var(--mut);font:inherit;font-size:.72rem;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;padding:4px 2px}
-.tabs button i{font-style:normal;font-size:1.35rem;line-height:1}
-.tabs button.on{color:var(--pri);font-weight:700;background:var(--pri-soft)}
-.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:14px;margin:0 0 12px;box-shadow:var(--sh)}
-.card h2,.card h3{margin:0 0 8px;font-size:1.02rem}
-.meta{display:flex;justify-content:space-between;align-items:center;gap:8px;color:var(--mut);font-size:.85rem;flex-wrap:wrap}
-.tag{background:var(--pri-soft);color:var(--pri);border-radius:999px;padding:2px 10px;font-weight:600}
-.prog{color:var(--mut);font-size:.8rem;margin:2px 0 8px}
-.vi{font-size:1.18rem;font-weight:600;margin:6px 0 10px;word-break:break-word}
-.vi.big{font-size:1.6rem;text-align:center;margin:14px 0}
-.zh{font-size:1.7rem;line-height:1.5;word-break:break-all;font-weight:500}
-.zh.big{font-size:1.9rem}
-.zh.mid{font-size:1.3rem}
-.py{color:var(--py);font-size:1rem;word-break:break-word}
-textarea{width:100%;min-height:112px;padding:12px;border:2px solid var(--bd);border-radius:14px;background:var(--bg);color:var(--tx);font:inherit;font-size:1.3rem;resize:vertical}
-textarea:focus{outline:none;border-color:var(--pri)}
-.btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;min-height:52px;padding:10px 14px;border-radius:14px;border:2px solid var(--bd);background:var(--card);color:var(--tx);font:inherit;font-weight:600;font-size:1rem;margin-top:10px;cursor:pointer;text-align:center}
-.btn:active{transform:scale(.98)}
-.btn.primary{background:var(--pri);color:var(--onpri);border-color:var(--pri);font-size:1.1rem;min-height:58px;letter-spacing:.5px}
-.btn.on{background:var(--warnbg);border-color:var(--acc);color:var(--warn)}
-.btn.sm{min-height:44px;font-size:.92rem;margin-top:6px}
-.row{display:flex;gap:10px}.row .btn{flex:1}
-.chips{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 12px}
-.chip{border:2px solid var(--bd);background:var(--card);color:var(--tx);border-radius:999px;padding:8px 14px;min-height:44px;font:inherit;font-size:.9rem;font-weight:600}
-.chip.on{background:var(--pri);color:var(--onpri);border-color:var(--pri)}
-.ico{border:2px solid var(--bd);background:var(--card);color:var(--tx);border-radius:12px;min-height:44px;min-width:44px;padding:4px 12px;font:inherit;font-size:.95rem;cursor:pointer}
-.audio{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:8px}
-.rate{display:flex;align-items:center;gap:8px;font-size:.88rem;color:var(--mut);flex:1;min-width:200px}
-.rate input{flex:1;min-width:90px;height:32px}
-.banner{border-radius:12px;padding:10px 12px;margin:8px 0;font-size:.9rem;line-height:1.45}
-.banner.high{background:var(--badbg);color:var(--bad);border:1px solid var(--bad)}
-.banner.elec{background:var(--warnbg);color:var(--warn);border:1px solid var(--acc)}
-.banner.info{background:var(--pri-soft);color:var(--tx);border:1px solid var(--pri)}
-.banner.ok{background:var(--okbg);color:var(--ok);border:1px solid var(--ok)}
-.banner.bad{background:var(--badbg);color:var(--bad);border:1px solid var(--bad)}
-.banner.warn{background:var(--warnbg);color:var(--warn);border:1px solid var(--acc)}
-.sec{border-top:1px dashed var(--bd);padding-top:10px;margin-top:12px}
-.sec:first-child{border-top:0;margin-top:0;padding-top:0}
-.sec h3{color:var(--pri);font-size:.98rem}
-ul{margin:6px 0;padding-left:20px}li{margin:4px 0}
-ul.kv{list-style:none;padding:0}ul.kv li{padding:6px 0;border-bottom:1px solid var(--bd)}ul.kv li:last-child{border-bottom:0}
-.vocab{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 0;border-bottom:1px solid var(--bd)}
-.vocab:last-child{border-bottom:0}.vocab .zh{font-size:1.25rem}
-.clause{background:var(--bg);border-radius:10px;padding:8px 10px;margin:6px 0}
-.dc{background:var(--bg);border:1px solid var(--bd);border-radius:12px;padding:10px;margin:8px 0}
-.dch{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.dch .zh{font-size:1.5rem}
-.blank{display:inline-block;min-width:1.4em;text-align:center;border-bottom:3px solid var(--acc);margin:0 2px;color:var(--acc);font-weight:700}
-.vh{color:var(--pri);font-weight:700}
-.opts{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:10px}
-.opts .btn{margin-top:0;min-height:60px;flex-direction:column;gap:0;line-height:1.2}
-.opts .btn b{font-size:1.6rem}.opts .btn small{font-weight:400;font-size:.75rem;color:var(--mut)}
-.badge{display:inline-block;border-radius:999px;padding:3px 12px;font-weight:700;font-size:.9rem}
-.badge.ok{background:var(--okbg);color:var(--ok)}.badge.warn{background:var(--warnbg);color:var(--warn)}.badge.bad{background:var(--badbg);color:var(--bad)}.badge.info{background:var(--pri-soft);color:var(--pri)}
-.stat{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-.stat div.s{background:var(--bg);border-radius:12px;padding:10px;text-align:center}
-.stat b{display:block;font-size:1.6rem;color:var(--pri)}.stat span{font-size:.8rem;color:var(--mut)}
-.bar{height:12px;border-radius:999px;background:var(--bg);border:1px solid var(--bd);overflow:hidden;margin:6px 0}
-.bar i{display:block;height:100%;background:var(--pri)}
-.flash{min-height:300px;border:2px solid var(--pri);border-radius:18px;background:var(--card);padding:16px;text-align:center;box-shadow:var(--sh);cursor:pointer;display:flex;flex-direction:column;justify-content:center;gap:6px}
-.flash small{color:var(--mut)}
-.flash .zh{font-size:2.4rem}
-.ex{background:var(--bg);border-radius:12px;padding:10px;text-align:left;margin-top:8px}
-.ex .zh{font-size:1.2rem}
-details{border:1px solid var(--bd);border-radius:12px;margin:8px 0;background:var(--card)}
-summary{padding:12px;min-height:48px;cursor:pointer;font-weight:600;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-details .in{padding:0 12px 12px}
-select{width:100%;min-height:48px;border-radius:12px;border:2px solid var(--bd);background:var(--card);color:var(--tx);font:inherit;padding:0 10px}
-.muted{color:var(--mut);font-size:.88rem}
-.tight{margin-top:4px}
-#toast{position:fixed;left:12px;right:12px;bottom:calc(76px + env(safe-area-inset-bottom));z-index:50;background:#1f2937;color:#fff;border-radius:12px;padding:12px 14px;font-size:.9rem;display:none;box-shadow:0 4px 18px rgba(0,0,0,.35)}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Luyện Tiếng Trung Kỹ Thuật XRF</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Custom scrollbar & mobile optimization */
+        * { -webkit-tap-highlight-color: transparent; }
+        body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
 </head>
-<body>
-<header class="top"><div class="brand">🔬 Luyện Trung · XRF</div><button class="ico" data-act="theme" aria-label="Đổi giao diện sáng hoặc tối">🌓</button></header>
-<main id="view"></main>
-<nav class="tabs" id="tabs">
-<button data-act="tab" data-t="quiz"><i>📝</i><span>Luyện câu</span></button>
-<button data-act="tab" data-t="dc"><i>🔁</i><span>Bổ ngữ</span></button>
-<button data-act="tab" data-t="cards"><i>🃏</i><span>Thẻ từ</span></button>
-<button data-act="tab" data-t="stats"><i>📊</i><span>Thống kê</span></button>
-<button data-act="tab" data-t="set"><i>⚙️</i><span>Cài đặt</span></button>
-</nav>
-<div id="toast" role="status"></div>
-<script id="data" type="application/json">__DATA__</script>
-<script>
-(function(){
-'use strict';
-var D=JSON.parse(document.getElementById('data').textContent);
-var Q=D.questions,QBY={},TOPICS=D.topics,CARDS=D.cards,SYN=D.syn,COMPS=D.complements,KEYS=D.keys;
-Q.forEach(function(q){QBY[q.id]=q;});
-var VG=Object.keys(D.verbnotes);
-var COMPDIR={};COMPS.forEach(function(c){COMPDIR[c.c]=c.dir;});
-var DRILL_IDS=Q.filter(function(q){return q.dc.length>0;}).map(function(q){return q.id;});
-var TOTAL=Q.length;
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-200">
 
-/* ---------- tiện ích ---------- */
-function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
-function $(s){return document.querySelector(s);}
-function rnd(a){return a[Math.floor(Math.random()*a.length)];}
-function allIds(){return Q.map(function(q){return q.id;});}
-var toastT=null;
-function toast(m){var t=$('#toast');t.textContent=m;t.style.display='block';clearTimeout(toastT);toastT=setTimeout(function(){t.style.display='none';},4500);}
+    <!-- HEADER / NAVIGATION -->
+    <header class="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-md mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <div class="w-9 h-9 rounded-xl bg-brand-500 flex items-center justify-center text-white font-bold shadow-md shadow-brand-500/20">
+                    <i class="fa-solid fa-microchip"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-base leading-tight">XRF Tech Chinese</h1>
+                    <span class="text-xs text-slate-500 dark:text-slate-400">100 Câu Kỹ Thuật Chuyên Ngành</span>
+                </div>
+            </div>
+            <div class="flex items-center space-x-1">
+                <!-- Theme Toggle -->
+                <button onclick="toggleDarkMode()" class="w-10 h-10 rounded-xl flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition">
+                    <i id="themeIcon" class="fa-solid fa-moon text-lg"></i>
+                </button>
+                <!-- AI Config Modal Button -->
+                <button onclick="openAiModal()" class="w-10 h-10 rounded-xl flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition" title="Cấu hình Gemini AI">
+                    <i class="fa-solid fa-robot text-lg"></i>
+                </button>
+            </div>
+        </div>
+        <!-- Tab Navigation Bar -->
+        <div class="max-w-md mx-auto px-2 flex overflow-x-auto hide-scrollbar border-t border-slate-100 dark:border-slate-700/50 bg-white dark:bg-slate-800">
+            <button onclick="switchTab('quiz')" id="tab-quiz" class="flex-1 py-3 px-3 text-xs font-semibold text-center border-b-2 border-brand-500 text-brand-600 dark:text-brand-400 whitespace-nowrap transition">
+                <i class="fa-solid fa-book-open mr-1"></i> Luyện Câu (100)
+            </button>
+            <button onclick="switchTab('direction')" id="tab-direction" class="flex-1 py-3 px-3 text-xs font-semibold text-center border-b-2 border-transparent text-slate-500 dark:text-slate-400 whitespace-nowrap transition">
+                <i class="fa-solid fa-compass mr-1"></i> Bổ Ngữ Hướng
+            </button>
+            <button onclick="switchTab('flashcard')" id="tab-flashcard" class="flex-1 py-3 px-3 text-xs font-semibold text-center border-b-2 border-transparent text-slate-500 dark:text-slate-400 whitespace-nowrap transition">
+                <i class="fa-solid fa-clone mr-1"></i> Flashcard
+            </button>
+            <button onclick="switchTab('stats')" id="tab-stats" class="flex-1 py-3 px-3 text-xs font-semibold text-center border-b-2 border-transparent text-slate-500 dark:text-slate-400 whitespace-nowrap transition">
+                <i class="fa-solid fa-chart-pie mr-1"></i> Thống Kê
+            </button>
+        </div>
+    </header>
 
-/* ---------- lưu trữ ---------- */
-var KEY='xrf_zh_v1',storageOK=true;
-function def(){return {q:{},remaining:allIds(),round:1,drill:{},drillRemaining:DRILL_IDS.slice(),cards:{},set:{theme:'auto',voice:'',rate:0.9}};}
-function load(){var d=def();try{var r=localStorage.getItem(KEY);if(r){var o=JSON.parse(r);for(var k in o){if(k==='set'){for(var j in o.set)d.set[j]=o.set[j];}else d[k]=o[k];}}}catch(e){storageOK=false;}return d;}
-var S=load();
-function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){if(storageOK){storageOK=false;toast('Trình duyệt không cho lưu dữ liệu: tiến độ sẽ mất khi đóng trang.');}}}
-if(!S.set||typeof S.set.rate!=='number')S.set.rate=0.9;
-S.set.rate=Math.min(1.2,Math.max(0.6,S.set.rate));
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="max-w-md mx-auto w-full p-4 flex-1 pb-20">
 
-/* ---------- giao diện sáng/tối ---------- */
-var mq=window.matchMedia?window.matchMedia('(prefers-color-scheme: dark)'):null;
-function applyTheme(){var t=S.set.theme;if(t==='auto')t=(mq&&mq.matches)?'dark':'light';document.documentElement.setAttribute('data-theme',t);var m=document.querySelector('meta[name=theme-color]');if(m)m.setAttribute('content',t==='dark'?'#0d1318':'#0f766e');}
-if(mq&&mq.addEventListener)mq.addEventListener('change',applyTheme);
+        <!-- TAB 1: QUIZ / LUYỆN 100 CÂU -->
+        <section id="view-quiz" class="space-y-4">
+            <!-- Safety Banner for High Voltage / X-ray -->
+            <div id="safetyWarning" class="hidden bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/60 rounded-2xl p-3 text-amber-800 dark:text-amber-200 text-xs flex items-start space-x-3 shadow-sm">
+                <i class="fa-solid fa-triangle-exclamation text-amber-500 text-base mt-0.5 shrink-0"></i>
+                <div>
+                    <span class="font-bold block mb-0.5">Lưu ý an toàn kỹ thuật XRF:</span>
+                    Trước khi tháo lắp nguồn cao áp, bóng X-ray hoặc linh kiện điện, <strong>luôn ngắt nguồn điện</strong>, xác nhận hết điện và tuân thủ quy trình an toàn của nhà sản xuất.
+                </div>
+            </div>
 
-/* ---------- âm thanh (Web Speech API) ---------- */
-var TTS={ok:false,voices:[],warned:false};
-try{TTS.ok=('speechSynthesis' in window)&&('SpeechSynthesisUtterance' in window);}catch(e){TTS.ok=false;}
-function refreshVoices(){if(!TTS.ok)return;try{TTS.voices=window.speechSynthesis.getVoices()||[];}catch(e){TTS.voices=[];}}
-function zhVoices(){return TTS.voices.filter(function(v){return /^zh([-_]|$)/i.test(v.lang)||/^cmn/i.test(v.lang)||/chinese|中文|普通话|國語/i.test(v.name);});}
-function pickVoice(){var vs=zhVoices();if(!vs.length)return null;if(S.set.voice){var f=vs.filter(function(v){return v.name===S.set.voice;})[0];if(f)return f;}var cn=vs.filter(function(v){return /(zh|cmn)[-_]CN/i.test(v.lang);})[0];return cn||vs[0];}
-function voiceStatus(){
- if(!TTS.ok)return {ok:false,msg:'Thiết bị/trình duyệt này không hỗ trợ giọng đọc (Web Speech API), nên không thể nghe phát âm. Bạn vẫn học được bằng pinyin hiển thị trên màn hình.'};
- var vs=zhVoices();
- if(!vs.length)return {ok:false,msg:'Chưa tìm thấy giọng tiếng Trung phổ thông trên máy. Trên Samsung/Android: Cài đặt → Quản lý chung → Chuyển văn bản thành giọng nói → chọn Google (hoặc Samsung) → tải gói tiếng Trung. Trình duyệt vẫn thử đọc bằng giọng mặc định nhưng có thể không phát được.'};
- return {ok:true,msg:'Đã tìm thấy '+vs.length+' giọng tiếng Trung.'};
-}
-function say(text){
- if(!TTS.ok){toast(voiceStatus().msg);return;}
- refreshVoices();
- try{
-  var syn=window.speechSynthesis;syn.cancel();
-  var u=new SpeechSynthesisUtterance(text);u.lang='zh-CN';
-  var v=pickVoice();if(v){u.voice=v;u.lang=v.lang;}
-  u.rate=S.set.rate;u.pitch=1;
-  u.onerror=function(ev){if(ev&&ev.error&&ev.error!=='canceled'&&ev.error!=='interrupted')toast('Không phát được âm thanh ('+ev.error+'). '+voiceStatus().msg);};
-  if(!v&&!TTS.warned){TTS.warned=true;toast(voiceStatus().msg);}
-  setTimeout(function(){try{syn.speak(u);}catch(e){toast('Không phát được âm thanh: '+e.message);}},60);
- }catch(e){toast('Không phát được âm thanh: '+e.message);}
-}
-function stopSay(){try{if(TTS.ok)window.speechSynthesis.cancel();}catch(e){}}
-function sayBtn(t,label){return '<button class="ico" data-act="say" data-t="'+esc(t)+'" aria-label="Nghe phát âm">🔊'+(label?' '+esc(label):'')+'</button>';}
-function rateCtl(){return '<label class="rate">Tốc độ <input type="range" min="0.6" max="1.2" step="0.05" value="'+S.set.rate+'" data-rate="1"><b class="rateval">'+S.set.rate.toFixed(2)+'</b></label>';}
-function voiceNote(){var v=voiceStatus();return v.ok?'':'<div class="banner warn">🔇 '+esc(v.msg)+'</div>';}
+            <!-- Quiz Top Bar: Stats & Filters -->
+            <div class="flex items-center justify-between bg-white dark:bg-slate-800 p-3 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700">
+                <div class="flex items-center space-x-2">
+                    <span id="quizBadge" class="bg-brand-100 text-brand-700 dark:bg-brand-900/50 dark:text-brand-300 text-xs font-bold px-2.5 py-1 rounded-lg">Câu 1/100</span>
+                    <span id="quizCategoryBadge" class="bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300 text-xs px-2.5 py-1 rounded-lg font-medium">A. Dụng cụ</span>
+                </div>
+                <div class="flex items-center space-x-1">
+                    <button onclick="toggleBookmarkCurrent()" id="bookmarkBtn" class="w-9 h-9 rounded-xl flex items-center justify-center text-slate-400 hover:text-amber-500 hover:bg-slate-100 dark:hover:bg-slate-700 transition" title="Đánh dấu câu khó">
+                        <i class="fa-solid fa-bookmark text-base"></i>
+                    </button>
+                    <button onclick="playCurrentAudio()" class="w-9 h-9 rounded-xl flex items-center justify-center text-brand-600 bg-brand-50 hover:bg-brand-100 dark:bg-brand-900/40 dark:text-brand-300 transition" title="Nghe phát âm">
+                        <i class="fa-solid fa-volume-high text-base"></i>
+                    </button>
+                </div>
+            </div>
 
-/* ---------- trạng thái ---------- */
-var quiz={cur:null,checked:false,text:'',checkedText:'',mode:'all'};
-var tab='quiz',dcSub='drill';
-var fc={deck:'tools',idx:0,flipped:false};
-var drill={cur:null,step:1,c1:null,lq:null,done:false,ok:false};
+            <!-- Quiz Card Body -->
+            <div class="bg-white dark:bg-slate-800 p-5 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700 space-y-4">
+                <!-- Vietnamese Prompt -->
+                <div>
+                    <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">Câu tiếng Việt:</span>
+                    <h2 id="vnPrompt" class="text-lg font-bold text-slate-900 dark:text-white leading-snug">Đang tải câu hỏi...</h2>
+                </div>
 
-function isWrong(id){var r=S.q[id];if(!r)return false;if(r.self==='wrong'||r.self==='partial')return true;return !r.self&&r.auto==='issues';}
-function isHard(id){return !!(S.q[id]&&S.q[id].hard);}
-function countWhere(f){return Q.filter(function(q){return f(q.id);}).length;}
+                <!-- User Input Area -->
+                <div class="space-y-2">
+                    <div class="flex items-center justify-between">
+                        <label for="userInputAnswer" class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Nhập câu trả lời tiếng Trung:</label>
+                        <div class="flex items-center space-x-2 text-xs text-slate-500">
+                            <span>Tốc độ đọc:</span>
+                            <select id="ttsRate" class="bg-slate-100 dark:bg-slate-700 rounded px-1.5 py-0.5 border-none font-medium">
+                                <option value="0.6">0.6x</option>
+                                <option value="0.8">0.8x</option>
+                                <option value="1.0" selected>1.0x</option>
+                                <option value="1.2">1.2x</option>
+                            </select>
+                        </div>
+                    </div>
+                    <textarea id="userInputAnswer" rows="3" placeholder="Nhập chữ Hán hoặc Pinyin..." class="w-full p-3 bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700 rounded-2xl focus:outline-none focus:ring-2 focus:ring-brand-500 text-base resize-none"></textarea>
+                </div>
 
-function nextQuestion(){
- var id=null,pool;
- if(quiz.mode==='wrong'||quiz.mode==='hard'){
-  pool=Q.filter(function(q){return quiz.mode==='wrong'?isWrong(q.id):isHard(q.id);}).map(function(q){return q.id;});
-  var p2=pool.filter(function(x){return x!==quiz.cur;});
-  if(!pool.length){toast(quiz.mode==='wrong'?'Chưa có câu sai/gần đúng nào cần luyện lại. Quay về vòng 100 câu.':'Chưa có câu nào được đánh dấu khó. Quay về vòng 100 câu.');quiz.mode='all';}
-  else id=rnd(p2.length?p2:pool);
- }
- if(quiz.mode==='all'){
-  S.remaining=(S.remaining||[]).filter(function(x){return QBY[x];});
-  if(!S.remaining.length){S.round=(S.round||1)+1;S.remaining=allIds().filter(function(x){return x!==quiz.cur||TOTAL===1;});}
-  var i=Math.floor(Math.random()*S.remaining.length);id=S.remaining.splice(i,1)[0];
- }
- quiz.cur=id;quiz.checked=false;quiz.text='';quiz.checkedText='';save();
-}
+                <!-- Action Buttons -->
+                <div class="grid grid-cols-2 gap-2">
+                    <button onclick="checkAnswer()" class="bg-brand-600 hover:bg-brand-700 text-white font-semibold py-3 px-4 rounded-xl shadow-lg shadow-brand-500/25 transition flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-check"></i>
+                        <span>CHỮA ĐÁP ÁN</span>
+                    </button>
+                    <button onclick="resetCurrentQuiz()" class="bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 font-semibold py-3 px-4 rounded-xl transition flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-rotate-right"></i>
+                        <span>Làm Lại</span>
+                    </button>
+                </div>
+            </div>
 
-/* ---------- chấm bài (không dùng AI) ---------- */
-function norm(s){return String(s).normalize('NFKC').toUpperCase().replace(/[\s\u3000，。？！、；：,.!?;:"'“”‘’（）()·…—~～\-]/g,'');}
-function reEsc(s){return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');}
-function dice(a,b){
- if(a.length<2||b.length<2)return a===b?1:0;
- function g(s){var m={};for(var i=0;i<s.length-1;i++){var k=s.substr(i,2);m[k]=(m[k]||0)+1;}return m;}
- var A=g(a),B=g(b),inter=0;for(var k in A){if(B[k])inter+=Math.min(A[k],B[k]);}
- return 2*inter/(a.length+b.length-2);
-}
-function check(q,raw){
- var r={verdict:'',sim:0,issues:[],good:[],notes:[]};
- var u=norm(raw),a=norm(q.zh);
- if(!u){r.verdict='empty';return r;}
- if(!/[\u4e00-\u9fff]/.test(raw)){r.verdict='nohan';return r;}
- var acc=[q.zh].concat(q.alts.map(function(x){return x.zh;})).map(norm);
- if(acc.indexOf(u)>=0){r.verdict='exact';r.sim=1;return r;}
- r.sim=dice(u,a);
- /* 1. từ khóa: thiếu ý / dùng từ */
- var pos=[];
- q.terms.forEach(function(t){
-  if(t.soft||t.indc)return;
-  var vars=[t.z].concat(SYN[t.z]||[]),p=-1,i;
-  for(i=0;i<vars.length;i++){var k=u.indexOf(norm(vars[i]));if(k>=0){p=k;break;}}
-  if(p>=0){r.good.push(t.z);pos.push({t:t,p:p});}
-  else{
-   var other=null;
-   if(VG.indexOf(t.z)>=0){other=VG.filter(function(v){return q.zh.indexOf(v)<0&&u.indexOf(norm(v))>=0;})[0];}
-   if(other)r.issues.push({k:'tu',m:'Bạn dùng「'+other+'」('+D.verbnotes[other]+') nhưng đáp án dùng「'+t.z+'」('+t.vi+'). Hai động từ khác nghĩa: hãy cân nhắc lại ngữ cảnh.'});
-   else r.issues.push({k:'y',m:'Chưa thấy「'+t.z+'」('+t.py+' — '+t.vi+') trong câu của bạn.'});
-  }
- });
- /* 2. trật tự từ */
- var last=-1,bad=[];
- pos.forEach(function(o){if(o.p<last)bad.push(o.t.z);else last=o.p;});
- if(bad.length)r.issues.push({k:'tt',m:'Trật tự từ: 「'+bad.join('、')+'」 đứng sai vị trí so với đáp án mẫu (đáp án: '+pos.map(function(o){return o.t.z;}).join(' → ')+').'});
- /* 3. bổ ngữ xu hướng kép */
- q.dc.forEach(function(d){
-  var un=norm(d.phrase);
-  if(u.indexOf(un)>=0){
-   r.good.push(d.phrase);
-   var head=norm(d.objpos&&d.objpos.indexOf('「')>=0?d.objpos.split('「')[1].split('」')[0]:'').substr(0,2);
-   if(head&&u.indexOf(un+head)>=0)r.issues.push({k:'np',m:'Tân ngữ 「'+head+'…」 đứng ngay sau '+d.phrase+': thường không tự nhiên. Hãy đưa tân ngữ lên trước động từ bằng 把, hoặc đặt giữa '+d.c1+' và '+d.lq+' (nếu cấu trúc cho phép).'});
-   return;
-  }
-  var vs=[d.verb].concat(SYN[d.verb]||[]),found=null,i;
-  for(i=0;i<vs.length&&!found;i++){var m=new RegExp(reEsc(norm(vs[i]))+'(上|下|进|出|回|过|起)(来|去)').exec(u);if(m)found=m[0];}
-  if(found){var c2=found.slice(-2);r.issues.push({k:'tu',m:'Bạn viết「'+found+'」, đáp án dùng「'+d.phrase+'」. '+c2+' = '+(COMPDIR[c2]||'')+'; còn '+d.phrase.slice(-2)+' = '+COMPDIR[d.phrase.slice(-2)]+'. Hãy xem lại hướng/góc nhìn người nói.'});}
-  else if(vs.some(function(v){return u.indexOf(norm(v))>=0;}))r.issues.push({k:'np',m:'Có động từ「'+d.verb+'」nhưng thiếu bổ ngữ xu hướng「'+d.phrase.slice(-2)+'」: đáp án dùng '+d.phrase+' để thể hiện hướng/kết quả của hành động.'});
-  else r.issues.push({k:'y',m:'Chưa thấy cấu trúc「'+d.phrase+'」('+d.vvi+' + hướng '+d.phrase.slice(-2)+').'});
- });
- /* 4. câu 把 kết thúc bằng động từ trần */
- raw.split(/[，,。？?！!；;]/).forEach(function(cl){
-  if(cl.indexOf('把')>=0){var lc=cl.trim().slice(-1);if('拿拆装插拔搬带找查放取调选发送换剥压缠'.indexOf(lc)>=0)r.issues.push({k:'np',m:'Câu 把「'+cl.trim()+'」kết thúc bằng động từ trần "'+lc+'": sau động từ trong câu 把 phải có thêm thành phần (bổ ngữ xu hướng/kết quả, 了…), VD 拿出来, 拆下来, 插紧.'});}
- });
- if(q.ba.length&&u.indexOf('把')<0)r.notes.push('Đáp án mẫu dùng 把 nhưng bạn không dùng 把. Điều này có thể vẫn đúng nếu tân ngữ đặt sau động từ và vẫn đủ bổ ngữ (VD: 拿出万用表来).');
- if(q.zh.indexOf('了')>=0&&!/[了过]/.test(raw))r.notes.push('Đáp án mẫu có 了 (hoàn thành/trạng thái mới), câu của bạn không có 了/过: kiểm tra xem ý "đã làm xong/đã thay đổi" có bị thiếu không.');
- if(!r.issues.length)r.verdict=r.sim>=0.7?'close':'unknown';else r.verdict='issues';
- return r;
-}
-var KL={y:'Lỗi thiếu ý',tu:'Lỗi dùng từ',np:'Lỗi ngữ pháp',tt:'Lỗi trật tự từ'};
+            <!-- Result / Feedback Panel (Hidden by default) -->
+            <div id="resultPanel" class="hidden bg-white dark:bg-slate-800 p-5 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700 space-y-4">
+                <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-700 pb-3">
+                    <h3 class="font-bold text-sm text-slate-900 dark:text-white flex items-center space-x-2">
+                        <i class="fa-solid fa-clipboard-check text-brand-500"></i>
+                        <span>Kết Quả & Phân Tích Kỹ Thuật</span>
+                    </h3>
+                    <span id="aiStatusBadge" class="text-xs bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 px-2 py-0.5 rounded font-medium">Chế độ chuẩn</span>
+                </div>
 
-/* ---------- khối hiển thị dùng chung ---------- */
-var SAFE={high:'⚠️ <b>AN TOÀN:</b> ngắt nguồn điện và <b>xác nhận đã hết điện</b> (chờ xả điện, đo lại bằng đồng hồ) rồi mới thao tác; tuân thủ quy trình an toàn của nhà sản xuất. Nguồn cao áp, ống X-ray và detector chỉ do kỹ thuật viên đã được đào tạo xử lý — người chưa được đào tạo không tự tháo các bộ phận nguy hiểm. Câu này chỉ để luyện ngôn ngữ, không phải hướng dẫn tháo lắp.',elec:'⚠️ <b>Lưu ý an toàn:</b> luôn ngắt nguồn điện và xác nhận hết điện trước khi thao tác; làm theo quy trình của nhà sản xuất. Không tự tháo bộ phận nguy hiểm nếu chưa được đào tạo.'};
-function safetyHtml(q){if(!q.safety)return '';var x=SAFE[q.safety];if(q.id===30)x+=' Dây tiếp địa là bộ phận an toàn: không tự ý tháo bỏ để máy chạy.';return '<div class="banner '+q.safety+'">'+x+'</div>';}
-function dcBlock(d){
- return '<div class="dc"><div class="dch"><span class="zh">'+esc(d.phrase)+'</span><span class="py">'+esc(d.py)+'</span>'+sayBtn(d.phrase)+'</div><ul class="kv">'+
- '<li><b>Động từ chính:</b> '+esc(d.verb)+' ('+esc(d.vpy)+') — '+esc(d.vvi)+'</li>'+
- '<li><b>Bổ ngữ xu hướng thứ nhất:</b> '+esc(d.c1)+' ('+esc(d.c1py)+') — '+esc(d.c1vi)+'</li>'+
- '<li><b>Bổ ngữ '+esc(d.lq)+':</b> '+esc(d.lq)+' ('+esc(d.lqpy)+') — '+esc(d.lqvi)+'</li>'+
- '<li><b>Hướng di chuyển:</b> '+esc(d.dir)+'</li>'+
- '<li><b>Vị trí tân ngữ:</b> '+esc(d.objpos)+'</li>'+
- '<li><b>Nghĩa '+esc(d.kind)+':</b> '+esc(d.meaning)+'</li></ul></div>';
-}
-function exHtml(e){return '<div class="ex"><div class="zh">'+esc(e.zh)+'</div><div class="py">'+esc(e.py)+'</div><div>'+esc(e.vi)+'</div><div class="audio">'+sayBtn(e.zh,'Nghe')+(e.src?'<span class="muted">'+esc(e.src)+'</span>':'')+'</div></div>';}
+                <!-- AI / Comparative Feedback -->
+                <div id="evaluationFeedback" class="bg-slate-50 dark:bg-slate-900/60 p-3.5 rounded-2xl text-sm space-y-2">
+                    <!-- Dynamic evaluation output -->
+                </div>
 
-/* ---------- LUYỆN CÂU ---------- */
-function viewQuiz(){
- if(quiz.cur===null)nextQuestion();
- var q=QBY[quiz.cur],rec=S.q[q.id]||{};
- var chips=[['all','Vòng 100 câu'],['wrong','Luyện lại câu sai ('+countWhere(isWrong)+')'],['hard','Câu khó ('+countWhere(isHard)+')']].map(function(m){return '<button class="chip'+(quiz.mode===m[0]?' on':'')+'" data-act="mode" data-m="'+m[0]+'">'+m[1]+'</button>';}).join('');
- var seen=TOTAL-(S.remaining||[]).length;
- return '<div class="chips">'+chips+'</div>'+
- '<section class="card"><div class="meta"><span>Câu <b>'+q.id+'</b>/'+TOTAL+'</span><span class="tag">'+q.topic+' · '+esc(TOPICS[q.topic])+'</span></div>'+
- '<div class="prog">Vòng '+(S.round||1)+': đã gặp '+seen+'/'+TOTAL+' câu'+(quiz.mode!=='all'?' · đang luyện chế độ riêng':'')+'</div>'+
- '<p class="vi">'+esc(q.vi)+'</p>'+safetyHtml(q)+
- '<textarea id="ans" lang="zh-CN" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Nhập câu tiếng Trung (chữ Hán) ở đây…">'+esc(quiz.text)+'</textarea>'+
- '<button class="btn primary" data-act="check">CHỮA ĐÁP ÁN</button>'+
- '<div class="row"><button class="btn" data-act="redo">↺ Làm lại câu này</button><button class="btn" data-act="next">Câu tiếp theo ➜</button></div>'+
- '<button class="btn'+(rec.hard?' on':'')+'" data-act="hard">'+(rec.hard?'★ Đã đánh dấu câu khó (bấm để bỏ)':'☆ Đánh dấu câu khó')+'</button></section>'+
- '<div id="result">'+(quiz.checked?resultHtml(q):'')+'</div>';
-}
-function verdictBlock(q,r){
- var t={empty:['info','Chưa nhập câu trả lời','Bạn chưa nhập gì nên công cụ chưa so sánh được. Hãy xem đáp án mẫu ở trên và tự đánh giá.'],
-  nohan:['info','Chưa có chữ Hán','Câu của bạn không chứa chữ Hán (có thể là pinyin hoặc tiếng Việt). Hãy nhập chữ Hán để đối chiếu; pinyin chỉ để đọc và nghe.'],
-  exact:['ok','Khớp đáp án mẫu','Câu của bạn trùng đáp án mẫu hoặc một cách diễn đạt khác đã được chấp nhận.'],
-  close:['ok','Rất gần đáp án mẫu','Không phát hiện lỗi theo từ khóa và quy tắc ngữ pháp mẫu, độ giống ký tự '+Math.round(r.sim*100)+'%. Có thể đúng — hãy tự đối chiếu.'],
-  unknown:['warn','Chưa kết luận được','Không phát hiện lỗi theo từ khóa, nhưng cách diễn đạt khác đáp án khá nhiều (độ giống ký tự '+Math.round(r.sim*100)+'%). Công cụ không hiểu được ngữ nghĩa, nên hãy tự đối chiếu với đáp án mẫu.'],
-  issues:['bad','Có '+r.issues.length+' điểm cần xem lại','Xem chi tiết bên dưới. Nếu câu của bạn đúng theo một cách nói khác, hãy chọn "Tôi làm đúng".']}[r.verdict];
- var h='<div class="banner '+t[0]+'"><b>'+t[1]+'.</b> '+esc(t[2])+'</div>';
- if(r.verdict==='issues'||r.issues.length){
-  var cnt={y:0,tu:0,np:0,tt:0};r.issues.forEach(function(i){cnt[i.k]++;});
-  h+='<p class="muted">'+['y','tu','np','tt'].map(function(k){return KL[k]+': <b>'+cnt[k]+'</b>';}).join(' · ')+'</p><ul>'+r.issues.map(function(i){return '<li><b>'+KL[i.k]+':</b> '+esc(i.m)+'</li>';}).join('')+'</ul>';
- }
- if(r.good.length)h+='<p><b>Đã dùng đúng:</b> '+r.good.map(esc).join('、')+'</p>';
- if(r.notes.length)h+='<ul>'+r.notes.map(function(n){return '<li>'+esc(n)+'</li>';}).join('')+'</ul>';
- return h;
-}
-function resultHtml(q){
- var r=check(q,quiz.checkedText),rec=S.q[q.id]||{},h='';
- h+='<section class="card">';
- if(q.safety)h+=safetyHtml(q);
- h+='<div class="sec"><h3>1. Đáp án chuẩn tiếng Trung</h3><div class="zh big">'+esc(q.zh)+'</div><div class="audio">'+sayBtn(q.zh,'Nghe đáp án')+'<button class="ico" data-act="stop">⏹ Dừng</button>'+rateCtl()+'</div>'+voiceNote()+'</div>';
- h+='<div class="sec"><h3>2. Pinyin đầy đủ</h3><div class="py" style="font-size:1.1rem">'+esc(q.py)+'</div></div>';
- h+='<div class="sec"><h3>3. Nghĩa tiếng Việt</h3><div>'+esc(q.meaning)+'</div></div>';
- h+='<div class="sec"><h3>4. Từ vựng quan trọng</h3>'+(q.terms.length?q.terms.map(function(t){return '<div class="vocab"><div><span class="zh">'+esc(t.z)+'</span> <span class="py">'+esc(t.py)+'</span><div class="muted">'+esc(t.vi)+'</div></div>'+sayBtn(t.z)+'</div>';}).join(''):'<p class="muted">Không có.</p>')+'</div>';
- h+='<div class="sec"><h3>5. Giải thích cấu trúc câu</h3>';
- if(q.clauses.length>1)h+=q.clauses.map(function(c,i){return '<div class="clause"><b>Vế '+(i+1)+':</b> <span class="zh mid">'+esc(c.zh)+'</span><div class="py">'+esc(c.py)+'</div></div>';}).join('');
- if(q.ba.length)h+='<p><b>Câu chữ 把</b> = 把 + tân ngữ + động từ + thành phần khác. Tân ngữ xác định được đưa lên trước động từ để nhấn mạnh việc xử lý nó:</p><ul>'+q.ba.map(function(b){return '<li><span class="zh mid">把 + '+esc(b.o)+' + '+esc(b.v)+'</span></li>';}).join('')+'</ul>';
- if(q.patterns.length)h+='<ul>'+q.patterns.map(function(p){return '<li>'+esc(p)+'</li>';}).join('')+'</ul>';
- if(!q.ba.length&&!q.patterns.length)h+='<p class="muted">Câu đơn giản: chủ ngữ + vị ngữ.</p>';
- h+='</div>';
- h+='<div class="sec"><h3>6. Phân tích bổ ngữ xu hướng kép</h3>';
- if(q.dc.length)h+=q.dc.map(dcBlock).join('');else h+='<p class="muted">Câu này không dùng bổ ngữ xu hướng kép (上来/下去/出来/…).</p>';
- if(q.dcNote)h+='<div class="banner info">'+esc(q.dcNote)+'</div>';
- h+='</div>';
- h+='<div class="sec"><h3>7. Nhận xét câu trả lời của bạn</h3>'+(quiz.checkedText.trim()?'<p><b>Câu bạn nhập:</b> <span class="zh mid">'+esc(quiz.checkedText.trim())+'</span></p>':'')+verdictBlock(q,r)+
- '<div class="banner info" style="font-size:.82rem">⚙️ Đây là chế độ <b>so sánh đáp án + từ khóa + quy tắc ngữ pháp</b>, <b>không phải AI</b> chấm bài. Công cụ có thể bỏ sót lỗi hoặc báo nhầm với câu đúng theo cách nói khác. Hãy luôn đối chiếu với đáp án mẫu và tự đánh giá bên dưới.</div></div>';
- h+='<div class="sec"><h3>8. Gợi ý cách nói tự nhiên hơn / cách diễn đạt khác</h3>';
- if(q.alts.length)h+=q.alts.map(function(a){return '<div class="ex"><div class="zh mid">'+esc(a.zh)+'</div><div class="py">'+esc(a.py)+'</div>'+(a.note?'<div class="muted">'+esc(a.note)+'</div>':'')+'<div class="audio">'+sayBtn(a.zh,'Nghe')+'</div></div>';}).join('');
- else h+='<p class="muted">Chưa có cách diễn đạt thay thế nào được ghi cho câu này; hãy dùng đáp án mẫu làm chuẩn.</p>';
- if(q.tips.length)h+='<ul>'+q.tips.map(function(t){return '<li>'+esc(t)+'</li>';}).join('')+'</ul>';
- h+='</div>';
- var sv=rec.self;
- h+='<div class="sec"><h3>Bạn tự đánh giá câu này</h3><div class="row">'+
- '<button class="btn sm'+(sv==='right'?' primary':'')+'" data-act="self" data-v="right">✅ Đúng</button>'+
- '<button class="btn sm'+(sv==='partial'?' primary':'')+'" data-act="self" data-v="partial">🟡 Gần đúng</button>'+
- '<button class="btn sm'+(sv==='wrong'?' primary':'')+'" data-act="self" data-v="wrong">❌ Sai</button></div>'+
- '<p class="muted tight">Câu "Gần đúng" và "Sai" sẽ vào danh sách <b>Luyện lại câu sai</b>.</p></div>';
- h+='<button class="btn primary" data-act="next">Câu tiếp theo ➜</button></section>';
- return h;
-}
+                <!-- Detailed Breakdown Accordion / Sections -->
+                <div class="space-y-3 text-sm">
+                    <div class="bg-brand-50/50 dark:bg-brand-950/20 p-3.5 rounded-2xl border border-brand-100 dark:border-brand-900/30">
+                        <span class="text-xs font-bold text-brand-700 dark:text-brand-400 uppercase tracking-wider block mb-1">Đáp án chuẩn tiếng Trung:</span>
+                        <div id="correctChinese" class="text-lg font-bold text-slate-900 dark:text-white mb-1"></div>
+                        <div id="correctPinyin" class="text-xs text-slate-500 dark:text-slate-400 italic mb-2"></div>
+                        <div id="correctMeaning" class="text-xs text-slate-700 dark:text-slate-300 font-medium"></div>
+                    </div>
 
-/* ---------- BỔ NGỮ XU HƯỚNG KÉP ---------- */
-function nextDrill(){
- S.drillRemaining=(S.drillRemaining||[]).filter(function(x){return QBY[x]&&QBY[x].dc.length;});
- if(!S.drillRemaining.length)S.drillRemaining=DRILL_IDS.filter(function(x){return x!==drill.cur||DRILL_IDS.length===1;});
- var i=Math.floor(Math.random()*S.drillRemaining.length);
- drill.cur=S.drillRemaining.splice(i,1)[0];drill.step=1;drill.c1=null;drill.lq=null;drill.done=false;drill.ok=false;save();
-}
-function drillCorrectCount(){return DRILL_IDS.filter(function(id){return S.drill[id]&&S.drill[id].ok>0;}).length;}
-function drillSentence(q,d){
- var i=q.zh.indexOf(d.phrase),before=q.zh.slice(0,i),after=q.zh.slice(i+d.phrase.length);
- var c1=drill.c1||'＿',lq=drill.lq||'＿',cls1='blank',cls2='blank';
- if(drill.done){cls1+=drill.c1===d.c1?' ok':' bad';cls2+=drill.lq===d.lq?' ok':' bad';}
- return esc(before)+'<span class="vh">'+esc(d.verb)+'</span><span class="'+cls1+'">'+esc(c1)+'</span><span class="'+cls2+'">'+esc(lq)+'</span>'+esc(after);
-}
-function viewDC(){
- var subs=[['drill','Luyện chọn'],['comps','13 bổ ngữ'],['keys','17 cấu trúc']].map(function(s){return '<button class="chip'+(dcSub===s[0]?' on':'')+'" data-act="dcsub" data-s="'+s[0]+'">'+s[1]+'</button>';}).join('');
- var done=drillCorrectCount(),pct=Math.round(done/DRILL_IDS.length*100);
- var h='<div class="chips">'+subs+'</div><div class="card"><div class="meta"><span>Tiến độ bổ ngữ kép: <b>'+done+'/'+DRILL_IDS.length+'</b> câu đã chọn đúng</span><span>'+pct+'%</span></div><div class="bar"><i style="width:'+pct+'%"></i></div></div>';
- if(dcSub==='comps'){
-  h+='<div class="banner info"><b>Mẹo:</b> 来 = hướng về phía <u>người nói</u>; 去 = hướng ra xa người nói. Tân ngữ chỉ <b>nơi chốn</b> phải đứng <b>trước 来/去</b> (VD 走进房间来); tân ngữ chỉ <b>vật</b> có thể đứng trước động từ (把), hoặc chen giữa V+bổ ngữ 1 và 来/去 (拿出万用表来).</div>';
-  h+=COMPS.map(function(c){return '<section class="card"><div class="dch"><span class="zh">'+esc(c.c)+'</span><span class="py">'+esc(c.py)+'</span>'+sayBtn(c.c)+'</div><p>'+esc(c.dir)+'</p><b>Nghĩa thực tế</b>'+exHtml({zh:c.real.zh,py:c.real.py,vi:c.real.vi})+'<b>Nghĩa mở rộng / dùng trong kỹ thuật</b>'+exHtml({zh:c.ext.zh,py:c.ext.py,vi:c.ext.vi})+'</section>';}).join('');
-  return h;
- }
- if(dcSub==='keys'){
-  h+='<p class="muted">Chạm vào từng cấu trúc để xem phân tích, ví dụ và câu đối chiếu.</p>';
-  h+=KEYS.map(function(k){return '<details><summary><span class="zh mid">'+esc(k.phrase)+'</span> <span class="py">'+esc(k.info.py)+'</span> <span class="muted">— '+esc(k.vi)+'</span></summary><div class="in">'+dcBlock(k.info)+'<b>Ví dụ</b>'+k.ex.map(exHtml).join('')+'<b>Đối chiếu để thấy sự khác biệt</b>'+k.contrast.map(function(c){return '<div class="ex"><div class="zh mid">'+esc(c.zh)+'</div><div class="py">'+esc(c.py)+'</div><div>'+esc(c.vi)+'</div><div class="muted">👉 '+esc(c.note)+'</div><div class="audio">'+sayBtn(c.zh,'Nghe')+'</div></div>';}).join('')+'</div></details>';}).join('');
-  return h;
- }
- if(drill.cur===null)nextDrill();
- var q=QBY[drill.cur],d=q.dc[0];
- h+='<section class="card"><div class="meta"><span>Câu <b>'+q.id+'</b> trong ngân hàng</span><span class="tag">Chọn bổ ngữ</span></div><p class="vi">'+esc(q.vi)+'</p>'+safetyHtml(q)+
- '<div class="zh" style="margin:10px 0">'+drillSentence(q,d)+'</div>';
- if(!drill.done){
-  if(drill.step===1){
-   h+='<p class="muted"><b>Bước 1:</b> chọn bổ ngữ xu hướng thứ nhất (hướng chính của hành động).</p><div class="opts">'+['上','下','进','出','回','过','起'].map(function(c){return '<button class="btn" data-act="c1" data-v="'+c+'"><b>'+c+'</b><small>'+esc(D.first[c].vi)+'</small></button>';}).join('')+'</div>';
-  }else{
-   h+='<p class="muted"><b>Bước 2:</b> 来 hay 去? Xét theo vị trí của người nói.</p><div class="opts">'+['来','去'].map(function(c){return '<button class="btn" data-act="lq" data-v="'+c+'"><b>'+c+'</b><small>'+esc(D.lq[c].vi)+'</small></button>';}).join('')+'</div>';
-  }
- }else{
-  var head=drill.ok?'<div class="banner ok"><b>✅ Chính xác!</b> Đáp án: '+esc(d.phrase)+'</div>':'<div class="banner bad"><b>❌ Chưa đúng.</b> Đáp án mẫu: <b>'+esc(d.phrase)+'</b>'+(drill.c1===d.c1?'. Bạn chọn đúng bổ ngữ thứ nhất ('+esc(d.c1)+') nhưng 来/去 phụ thuộc vị trí người nói; hãy đọc phần giải thích.':'')+'</div>';
-  h+=head+'<div class="zh mid">'+esc(q.zh)+'</div><div class="py">'+esc(q.py)+'</div><div class="audio">'+sayBtn(q.zh,'Nghe câu')+'<button class="ico" data-act="stop">⏹ Dừng</button>'+rateCtl()+'</div>'+voiceNote()+
-  '<p class="muted">Lưu ý: với cùng một câu tiếng Việt, 来/去 có thể đổi nếu người nói đứng ở vị trí khác; đáp án ở đây theo ngân hàng câu của bạn.</p>'+q.dc.map(dcBlock).join('')+'<button class="btn primary" data-act="dnext">Câu tiếp theo ➜</button>';
- }
- return h+'</section>';
-}
+                    <div class="grid grid-cols-1 gap-2">
+                        <div class="bg-slate-50 dark:bg-slate-900/60 p-3 rounded-xl">
+                            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1">Từ vựng quan trọng:</span>
+                            <div id="vocabList" class="text-xs font-medium text-slate-700 dark:text-slate-300"></div>
+                        </div>
+                        <div class="bg-slate-50 dark:bg-slate-900/60 p-3 rounded-xl">
+                            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1">Giải thích ngữ pháp & Cấu trúc:</span>
+                            <div id="grammarExpl" class="text-xs text-slate-700 dark:text-slate-300"></div>
+                        </div>
+                        <div id="complementContainer" class="hidden bg-slate-50 dark:bg-slate-900/60 p-3 rounded-xl">
+                            <span class="text-xs font-bold text-brand-600 dark:text-brand-400 uppercase tracking-wider block mb-1">Phân tích Bổ ngữ xu hướng kép:</span>
+                            <div id="complementExpl" class="text-xs text-slate-700 dark:text-slate-300"></div>
+                        </div>
+                    </div>
+                </div>
 
-/* ---------- FLASHCARD ---------- */
-var DECKS=[['tools','Dụng cụ'],['parts','Linh kiện & thiết bị'],['bank','Từ trong 100 câu']];
-function deckCards(){return CARDS.filter(function(c){return c.deck===fc.deck;});}
-function viewCards(){
- var list=deckCards();if(fc.idx>=list.length)fc.idx=0;if(fc.idx<0)fc.idx=list.length-1;
- var c=list[fc.idx],st=S.cards[c.zh];
- var chips=DECKS.map(function(d){var n=CARDS.filter(function(x){return x.deck===d[0];}).length;return '<button class="chip'+(fc.deck===d[0]?' on':'')+'" data-act="deck" data-d="'+d[0]+'">'+d[1]+' ('+n+')</button>';}).join('');
- var known=list.filter(function(x){return S.cards[x.zh]==='know';}).length;
- var h='<div class="chips">'+chips+'</div><div class="meta" style="margin-bottom:8px"><span>Thẻ <b>'+(fc.idx+1)+'/'+list.length+'</b></span><span>Đã nhớ: <b>'+known+'/'+list.length+'</b>'+(st==='know'?' · thẻ này ✅':st==='again'?' · thẻ này 😕':'')+'</span></div>';
- h+='<div class="flash" data-act="flip">';
- if(!fc.flipped)h+='<small>TIẾNG VIỆT — chạm để lật thẻ</small><div class="vi big">'+esc(c.vi)+'</div><small>Hãy thử nhớ từ tiếng Trung trước khi lật</small>';
- else{
-  h+='<small>TIẾNG TRUNG</small><div class="zh">'+esc(c.zh)+'</div><div class="py" style="font-size:1.2rem">'+esc(c.py)+'</div><div>'+esc(c.vi)+'</div><div class="audio" style="justify-content:center">'+sayBtn(c.zh,'Nghe phát âm')+'<button class="ico" data-act="stop">⏹</button></div>';
-  if(c.ex)h+='<div class="ex"><b>Ví dụ:</b><div class="zh">'+esc(c.ex.zh)+'</div><div class="py">'+esc(c.ex.py)+'</div><div>'+esc(c.ex.vi)+'</div><div class="audio">'+sayBtn(c.ex.zh,'Nghe câu')+'<span class="muted">'+esc(c.ex.src||'')+'</span></div></div>';
- }
- h+='</div>';
- if(fc.flipped)h+='<div class="row"><button class="btn" data-act="again">😕 Chưa nhớ</button><button class="btn primary" data-act="know">✅ Đã nhớ</button></div>';
- h+='<div class="row"><button class="btn" data-act="cprev">‹ Trước</button><button class="btn" data-act="crand">🔀 Ngẫu nhiên</button><button class="btn" data-act="cnext">Sau ›</button></div>';
- h+='<div class="audio" style="margin-top:10px">'+rateCtl()+'</div>'+voiceNote();
- return h;
-}
+                <!-- Self Evaluation Buttons -->
+                <div class="pt-2 border-t border-slate-100 dark:border-slate-700">
+                    <span class="text-xs text-slate-400 block mb-2 text-center font-medium">Bạn đánh giá mức độ nắm giữ câu này thế nào?</span>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button onclick="markSelfResult(true)" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300 font-semibold py-2.5 px-3 rounded-xl text-xs transition flex items-center justify-center space-x-1.5 border border-emerald-200 dark:border-emerald-800">
+                            <i class="fa-solid fa-face-smile"></i>
+                            <span>Đã Nắm Rõ (Đúng)</span>
+                        </button>
+                        <button onclick="markSelfResult(false)" class="bg-rose-50 hover:bg-rose-100 text-rose-700 dark:bg-rose-950/40 dark:text-rose-300 font-semibold py-2.5 px-3 rounded-xl text-xs transition flex items-center justify-center space-x-1.5 border border-rose-200 dark:border-rose-800">
+                            <i class="fa-solid fa-face-frown"></i>
+                            <span>Cần Ôn Lại (Sai)</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
 
-/* ---------- THỐNG KÊ ---------- */
-function viewStats(){
- var practiced=Q.filter(function(q){return S.q[q.id]&&S.q[q.id].att>0;}).length;
- var hard=countWhere(isHard),wrong=countWhere(isWrong);
- var right=Q.filter(function(q){return S.q[q.id]&&S.q[q.id].self==='right';}).length;
- var partial=Q.filter(function(q){return S.q[q.id]&&S.q[q.id].self==='partial';}).length;
- var pct=Math.round(practiced/TOTAL*100),dcDone=drillCorrectCount(),dcPct=Math.round(dcDone/DRILL_IDS.length*100);
- var known=Object.keys(S.cards).filter(function(k){return S.cards[k]==='know';}).length;
- function box(n,l){return '<div class="s"><b>'+n+'</b><span>'+l+'</span></div>';}
- return (storageOK?'':'<div class="banner bad">Trình duyệt đang chặn lưu dữ liệu (localStorage): tiến độ sẽ mất khi đóng trang.</div>')+
- '<section class="card"><h2>Tiến độ luyện câu</h2><div class="stat">'+box(TOTAL,'Tổng số câu')+box(practiced,'Số câu đã luyện')+box(TOTAL-practiced,'Số câu chưa luyện')+box(hard,'Câu đã đánh dấu khó')+box(wrong,'Câu cần luyện lại')+box(right,'Câu đúng (tự đánh giá)')+'</div>'+
- '<p style="margin:12px 0 0">Tỷ lệ hoàn thành: <b>'+pct+'%</b> ('+practiced+'/'+TOTAL+')</p><div class="bar"><i style="width:'+pct+'%"></i></div>'+
- '<p class="muted">Tự đánh giá "gần đúng": '+partial+' câu · Vòng hiện tại: '+(S.round||1)+' (đã gặp '+(TOTAL-(S.remaining||[]).length)+'/'+TOTAL+' câu)</p></section>'+
- '<section class="card"><h2>Bổ ngữ xu hướng kép</h2><p style="margin:0">Đã chọn đúng: <b>'+dcDone+'/'+DRILL_IDS.length+'</b> câu ('+dcPct+'%)</p><div class="bar"><i style="width:'+dcPct+'%"></i></div><p class="muted">Tính trên các câu trong ngân hàng có dùng bổ ngữ xu hướng kép, ở chế độ "Luyện chọn".</p></section>'+
- '<section class="card"><h2>Flashcard</h2><p style="margin:0">Số thẻ đã nhớ: <b>'+known+'/'+CARDS.length+'</b></p></section>';
-}
+            <!-- Quiz Navigation Bottom Bar -->
+            <div class="flex items-center justify-between pt-2">
+                <button onclick="prevQuiz()" class="bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-semibold py-2.5 px-4 rounded-xl text-xs shadow-sm border border-slate-200 dark:border-slate-700 flex items-center space-x-1.5 transition">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    <span>Câu Trước</span>
+                </button>
+                <div class="flex items-center space-x-1">
+                    <button onclick="filterMode = 'all'; loadQuiz(currentIndex);" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300">Tất cả</button>
+                    <button onclick="filterMode = 'wrong'; loadFirstWrong();" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-rose-100 dark:bg-rose-900/50 text-rose-700 dark:text-rose-300">Cần ôn lại (<span id="countWrong">0</span>)</button>
+                </div>
+                <button onclick="nextQuiz()" class="bg-brand-600 hover:bg-brand-700 text-white font-semibold py-2.5 px-4 rounded-xl text-xs shadow-md shadow-brand-500/20 flex items-center space-x-1.5 transition">
+                    <span>Câu Tiếp</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </section>
 
-/* ---------- CÀI ĐẶT ---------- */
-function viewSet(){
- refreshVoices();var vs=zhVoices(),vst=voiceStatus();
- var opts='<option value="">Tự động chọn (ưu tiên tiếng Trung phổ thông)</option>'+vs.map(function(v){return '<option value="'+esc(v.name)+'"'+(S.set.voice===v.name?' selected':'')+'>'+esc(v.name+' ('+v.lang+')')+'</option>';}).join('');
- return '<section class="card"><h2>Giao diện</h2><div class="chips" style="margin:0">'+[['auto','Theo máy'],['light','Sáng'],['dark','Tối']].map(function(t){return '<button class="chip'+(S.set.theme===t[0]?' on':'')+'" data-act="settheme" data-v="'+t[0]+'">'+t[1]+'</button>';}).join('')+'</div></section>'+
- '<section class="card"><h2>Âm thanh</h2><div class="banner '+(vst.ok?'ok':'warn')+'">'+esc(vst.msg)+'</div>'+(TTS.ok?'<label class="muted" for="voiceSel">Giọng đọc</label><select id="voiceSel">'+opts+'</select>':'')+
- '<div class="audio">'+rateCtl()+'</div><div class="row"><button class="btn" data-act="say" data-t="你好，请先断电，再检查电压。">🔊 Nghe thử</button><button class="btn" data-act="stop">⏹ Dừng</button></div></section>'+
- '<section class="card"><h2>Về chế độ chấm bài</h2><p class="muted" style="margin:0">Ứng dụng chạy hoàn toàn offline trong một file HTML, <b>không có AI</b>. Phần chữa bài so sánh với đáp án mẫu, các cách diễn đạt được chấp nhận, từ khóa và một số quy tắc ngữ pháp (bổ ngữ xu hướng, câu 把…); bạn luôn có đáp án mẫu để tự đối chiếu và tự đánh giá. Từ vựng, giải thích ngữ pháp, phân tích bổ ngữ và các cách diễn đạt khác là phần bổ sung đi kèm ngân hàng 100 câu; hãy kiểm tra lại với giáo viên hoặc tài liệu của bạn nếu cần.</p></section>'+
- '<section class="card"><h2>An toàn kỹ thuật</h2><p class="muted" style="margin:0">Ứng dụng chỉ luyện ngôn ngữ. Luôn ngắt nguồn điện, xác nhận hết điện và tuân thủ quy trình của nhà sản xuất trước khi thao tác. Nguồn cao áp, ống X-ray, detector chỉ do kỹ thuật viên đã được đào tạo xử lý.</p></section>'+
- '<section class="card"><h2>Dữ liệu</h2><p class="muted">Tiến độ lưu trong trình duyệt (localStorage) trên máy này.</p><button class="btn" data-act="reset" style="border-color:var(--bad);color:var(--bad)">🗑️ Xóa toàn bộ tiến độ</button></section>';
-}
+        <!-- TAB 2: BỔ NGỮ HƯỚNG KÉP -->
+        <section id="view-direction" class="hidden space-y-4">
+            <div class="bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700">
+                <h2 class="font-bold text-base mb-1 flex items-center space-x-2">
+                    <i class="fa-solid fa-compass text-brand-500"></i>
+                    <span>Chuyên Đề: Bổ Ngữ Xu Hướng Kép</span>
+                </h2>
+                <p class="text-xs text-slate-500 dark:text-slate-400">
+                    Khảo sát cấu trúc di chuyển phức hợp trong kỹ thuật XRF gồm các động từ kết hợp với cụm hướng di chuyển và vị trí của tân ngữ.
+                </p>
+            </div>
 
-/* ---------- vẽ ---------- */
-function render(){
- var v=$('#view');
- v.innerHTML=tab==='quiz'?viewQuiz():tab==='dc'?viewDC():tab==='cards'?viewCards():tab==='stats'?viewStats():viewSet();
- Array.prototype.forEach.call(document.querySelectorAll('#tabs button'),function(b){b.classList.toggle('on',b.dataset.t===tab);});
-}
+            <!-- Selector of the 17 Core Target Verbs -->
+            <div class="bg-white dark:bg-slate-800 p-4 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700 space-y-3">
+                <label for="dirVerbSelect" class="text-xs font-bold text-slate-400 uppercase tracking-wider block">Chọn cấu trúc bổ ngữ xu hướng kép:</label>
+                <select id="dirVerbSelect" onchange="renderDirectionDetail()" class="w-full p-3 bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700 rounded-xl font-bold text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+                    <!-- Populated dynamically via JS -->
+                </select>
+            </div>
 
-/* ---------- sự kiện ---------- */
-document.addEventListener('click',function(e){
- var b=e.target.closest?e.target.closest('[data-act]'):null;if(!b)return;
- var a=b.dataset.act,q,rec;
- switch(a){
- case 'tab':tab=b.dataset.t;render();window.scrollTo(0,0);break;
- case 'theme':S.set.theme=((document.documentElement.getAttribute('data-theme')==='dark')?'light':'dark');save();applyTheme();if(tab==='set')render();break;
- case 'settheme':S.set.theme=b.dataset.v;save();applyTheme();render();break;
- case 'say':say(b.dataset.t);break;
- case 'stop':stopSay();break;
- case 'mode':quiz.mode=b.dataset.m;quiz.cur=null;nextQuestion();render();window.scrollTo(0,0);break;
- case 'check':{
-  var ta=$('#ans');quiz.text=ta?ta.value:quiz.text;quiz.checkedText=quiz.text;quiz.checked=true;
-  q=QBY[quiz.cur];var r=check(q,quiz.checkedText);
-  rec=S.q[q.id]||{att:0};rec.att=(rec.att||0)+1;if(['exact','close','issues','unknown'].indexOf(r.verdict)>=0)rec.auto=r.verdict;delete rec.self;rec.t=Date.now();S.q[q.id]=rec;save();
-  render();var res=$('#result');if(res&&res.scrollIntoView)res.scrollIntoView({behavior:'smooth',block:'start'});break;}
- case 'redo':quiz.checked=false;quiz.text='';quiz.checkedText='';stopSay();render();window.scrollTo(0,0);var t2=$('#ans');if(t2)t2.focus();break;
- case 'next':stopSay();nextQuestion();render();window.scrollTo(0,0);break;
- case 'hard':q=QBY[quiz.cur];rec=S.q[q.id]||{att:0};rec.hard=!rec.hard;S.q[q.id]=rec;save();var ta2=$('#ans');if(ta2)quiz.text=ta2.value;render();toast(rec.hard?'Đã đánh dấu câu khó.':'Đã bỏ đánh dấu khó.');break;
- case 'self':q=QBY[quiz.cur];rec=S.q[q.id]||{att:0};rec.self=b.dataset.v;S.q[q.id]=rec;save();var ta3=$('#ans');if(ta3)quiz.text=ta3.value;render();break;
- case 'dcsub':dcSub=b.dataset.s;render();window.scrollTo(0,0);break;
- case 'c1':drill.c1=b.dataset.v;drill.step=2;render();break;
- case 'lq':{drill.lq=b.dataset.v;var qd=QBY[drill.cur],d=qd.dc[0];drill.ok=(drill.c1===d.c1&&drill.lq===d.lq);drill.done=true;
-  var pr=S.drill[qd.id]||{ok:0,tries:0};pr.tries++;if(drill.ok)pr.ok++;S.drill[qd.id]=pr;save();render();break;}
- case 'dnext':stopSay();nextDrill();render();window.scrollTo(0,0);break;
- case 'deck':fc.deck=b.dataset.d;fc.idx=0;fc.flipped=false;render();break;
- case 'flip':fc.flipped=!fc.flipped;render();break;
- case 'know':case 'again':{var c=deckCards()[fc.idx];S.cards[c.zh]=a;save();var n=deckCards().length;fc.idx=(fc.idx+1)%n;fc.flipped=false;render();break;}
- case 'cprev':fc.idx=(fc.idx-1+deckCards().length)%deckCards().length;fc.flipped=false;render();break;
- case 'cnext':fc.idx=(fc.idx+1)%deckCards().length;fc.flipped=false;render();break;
- case 'crand':fc.idx=Math.floor(Math.random()*deckCards().length);fc.flipped=false;render();break;
- case 'reset':if(window.confirm('Xóa toàn bộ tiến độ luyện tập, thẻ đã nhớ và cài đặt?')){S=def();save();applyTheme();quiz.cur=null;quiz.checked=false;quiz.text='';drill.cur=null;toast('Đã xóa tiến độ.');render();}break;
- }
-});
-document.addEventListener('input',function(e){
- var t=e.target;
- if(t.id==='ans')quiz.text=t.value;
- if(t.dataset&&t.dataset.rate){S.set.rate=parseFloat(t.value);Array.prototype.forEach.call(document.querySelectorAll('.rateval'),function(n){n.textContent=S.set.rate.toFixed(2);});Array.prototype.forEach.call(document.querySelectorAll('input[data-rate]'),function(n){if(n!==t)n.value=S.set.rate;});save();}
-});
-document.addEventListener('change',function(e){if(e.target.id==='voiceSel'){S.set.voice=e.target.value;save();}});
-if(TTS.ok){refreshVoices();try{window.speechSynthesis.onvoiceschanged=function(){refreshVoices();if(tab==='set')render();};}catch(e){}}
-window.addEventListener('error',function(ev){try{toast('Lỗi: '+ev.message);}catch(e){}});
+            <!-- Detailed Breakdown Card -->
+            <div id="dirDetailCard" class="bg-white dark:bg-slate-800 p-5 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700 space-y-4">
+                <!-- Dynamic content populated by JS -->
+            </div>
+        </section>
 
-applyTheme();
-nextQuestion();
-render();
-window.__app={Q:Q,check:check,S:function(){return S;},render:render,setTab:function(t){tab=t;render();}};
-})();
-</script>
-</body>
-</html>
+        <!-- TAB 3: FLASHCARD TỪ VỰNG -->
+        <section id="view-flashcard" class="hidden space-y-4">
+            <div class="bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 flex items-center justify-between">
+                <div>
+                    <h2 class="font-bold text-base flex items-center space-x-2">
+                        <i class="fa-solid fa-clone text-brand-500"></i>
+                        <span>Flashcard Dụng Cụ & Thiết Bị XRF</span>
+                    </h2>
+                    <span id="fcCounter" class="text-xs text-slate-500 dark:text-slate-400">Thẻ 1 / 29</span>
+                </div>
+                <div class="flex space-x-1">
+                    <button onclick="filterFlashcards('all')" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-brand-50 text-brand-700 dark:bg-brand-950 dark:text-brand-300">Tất cả</button>
+                    <button onclick="filterFlashcards('tool')" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300">Dụng cụ</button>
+                    <button onclick="filterFlashcards('device')" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300">Thiết bị</button>
+                </div>
+            </div>
+
+            <!-- Flashcard Flip Box -->
+            <div onclick="flipCard()" id="flashcardBox" class="bg-white dark:bg-slate-800 p-6 rounded-3xl shadow-md border border-slate-200 dark:border-slate-700 min-h-[260px] flex flex-col items-center justify-center text-center cursor-pointer relative transition-transform duration-300">
+                <span id="fcCategoryTag" class="absolute top-4 left-4 text-[10px] font-bold uppercase px-2 py-1 bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 rounded-md">Dụng cụ điện</span>
+                <button onclick="event.stopPropagation(); playFlashcardAudio();" class="absolute top-4 right-4 w-9 h-9 rounded-xl bg-brand-50 dark:bg-brand-950 text-brand-600 dark:text-brand-300 flex items-center justify-center hover:scale-105 transition" title="Nghe phát âm">
+                    <i class="fa-solid fa-volume-high"></i>
+                </button>
+                
+                <div id="fcContent" class="space-y-3 my-auto">
+                    <!-- Front / Back content populated by JS -->
+                </div>
+                
+                <span class="absolute bottom-3 text-[11px] text-slate-400 italic">Chạm vào thẻ để lật mặt trước / sau</span>
+            </div>
+
+            <!-- Flashcard Controls -->
+            <div class
